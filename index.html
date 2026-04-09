@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ác Giả Ác Báo - Nhiệm Vụ 3</title>
+  <title>Vòng Xoáy Tội Ác - Nhiệm Vụ 2</title>
 
   <!-- ══════════════════════════════════════════════════
        FAVICON — THAY LINK Ở ĐÂY
@@ -76,6 +76,7 @@
       z-index: 2;
       width: 100%;
       max-width: 720px;
+      flex-shrink: 0;
       animation: fadeSlideIn 0.8s ease forwards;
     }
 
@@ -140,7 +141,7 @@
       height: 1px;
       background: linear-gradient(to right, transparent, var(--gold-mid), transparent);
     }
-    .divider-icon { color: var(--gold); font-size: 16px; }
+    .divider- { color: var(--gold); font-size: 16px; }
 
     /* ---- HEADINGS ---- */
     .case-label {
@@ -207,6 +208,7 @@
     .answers li { position: relative; }
 
     .answers input[type="checkbox"] { display: none; }
+    .answers input[type="radio"] { display: none; }
 
     .answers label {
       display: flex;
@@ -281,6 +283,18 @@
       border-color: var(--gold);
     }
     .answers input[type="checkbox"]:checked + label .check-box::after { opacity: 1; }
+
+    .answers input[type="radio"]:checked + label {
+      background: rgba(235,209,30,0.1);
+      border-color: var(--gold);
+      color: var(--paper);
+    }
+    .answers input[type="radio"]:checked + label::before { background: var(--gold); }
+    .answers input[type="radio"]:checked + label .check-box {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+    .answers input[type="radio"]:checked + label .check-box::after { opacity: 1; }
 
     /* ---- BUTTONS AREA ---- */
     .btn-group {
@@ -374,57 +388,15 @@
       letter-spacing: 2px;
     }
 
-    /* ---- MULTI-QUESTION: group label & step indicator ---- */
-    .step-indicator {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 24px;
-      justify-content: center;
-    }
-    .step-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: rgba(235,209,30,0.2);
-      border: 1px solid rgba(235,209,30,0.3);
-      transition: all 0.3s ease;
-    }
-    .step-dot.active {
-      background: var(--gold);
-      box-shadow: 0 0 8px rgba(235,209,30,0.5);
-    }
-    .step-dot.done {
-      background: rgba(235,209,30,0.5);
-    }
-
-    .group-title {
-      font-family: 'Courier Prime', 'Courier New', monospace;
-      font-size: 11px;
-      letter-spacing: 2px;
-      color: var(--gold);
-      opacity: 0.7;
-      margin: 22px 0 12px;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .group-title::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: rgba(235,209,30,0.15);
-    }
-
-    /* Transition khi chuyển câu hỏi */
-    .card.fade-out { opacity: 0; transform: translateY(-8px); transition: all 0.3s ease; }
-    .card.fade-in  { opacity: 0; transform: translateY(8px); }
-    .card.fade-in.visible { opacity: 1; transform: translateY(0); transition: all 0.35s ease; }
-
     /* ---- RESULT SCREEN ---- */
     #result-img {
       display: none;
       animation: fadeSlideIn 0.6s ease forwards;
+      width: 100%;
+    }
+
+    #quiz {
+      width: 100%;
     }
 
     .result-card {
@@ -833,6 +805,8 @@
       .popup-body { padding: 18px 20px 24px; }
       .result-nav { flex-direction: column; padding: 18px 18px 24px; }
       .music-player { top: 10px; right: 10px; }
+      .fab-group-left { bottom: 14px; left: 14px; }
+      .doc-panel { width: 260px; }
     }
 
     /* Mobile/touch: panel nhạc luôn thu gọn, chỉ hiện nút play/pause */
@@ -843,6 +817,379 @@
         opacity: 1;
         padding: 0 12px 0 10px;
       }
+    }
+
+    /* ---- FAB TRÁI — HỒ SƠ TÀI LIỆU ---- */
+    .fab-group-left {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 1000;
+    }
+
+    .fab-left-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(235,209,30,0.35);
+      background: var(--dark2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+      position: relative;
+    }
+
+    .fab-left-label {
+      position: absolute;
+      left: 54px;
+      top: 50%;
+      transform: translateY(-50%) translateX(-6px);
+      font-family: 'Courier Prime', 'Courier New', monospace;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      color: var(--gold);
+      background: var(--dark2);
+      border: 1px solid rgba(235,209,30,0.3);
+      padding: 5px 10px;
+      border-radius: 3px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .fab-left-btn:hover .fab-left-label {
+      opacity: 1;
+      transform: translateY(-50%) translateX(0);
+    }
+    .fab-left-btn svg { width: 22px; height: 22px; fill: var(--gold); transition: fill 0.2s; }
+    .fab-left-btn:hover {
+      background: var(--gold);
+      border-color: var(--gold);
+      box-shadow: 0 6px 20px rgba(235,209,30,0.35);
+      transform: scale(1.08);
+    }
+    .fab-left-btn:hover svg { fill: var(--dark); }
+
+    /* Panel danh sách tài liệu */
+    .doc-panel {
+      position: absolute;
+      bottom: 54px;
+      left: 0;
+      width: 300px;
+      background: var(--dark2);
+      border: 1px solid rgba(235,209,30,0.3);
+      border-radius: 6px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.8), 0 0 30px rgba(235,209,30,0.05);
+      overflow: hidden;
+      display: none;
+      flex-direction: column;
+      animation: popIn 0.25s cubic-bezier(0.34,1.56,0.64,1) forwards;
+      transform-origin: bottom left;
+    }
+    .doc-panel.is-open { display: flex; }
+
+    .doc-panel-header {
+      padding: 12px 14px 10px;
+      border-bottom: 1px solid rgba(235,209,30,0.15);
+      flex-shrink: 0;
+    }
+
+    .doc-panel-title {
+      font-family: 'Courier Prime', 'Courier New', monospace;
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--gold);
+      text-transform: uppercase;
+      opacity: 0.8;
+      margin-bottom: 10px;
+    }
+
+    .doc-search {
+      width: 100%;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(235,209,30,0.25);
+      border-radius: 4px;
+      color: var(--paper);
+      font-family: 'Courier Prime', 'Courier New', monospace;
+      font-size: 12px;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+    .doc-search::placeholder { color: rgba(245,240,232,0.25); }
+    .doc-search:focus { border-color: var(--gold); }
+
+    /* Scroll container */
+    .doc-scroll {
+      overflow-y: auto;
+      max-height: 320px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(235,209,30,0.2) transparent;
+    }
+    .doc-scroll::-webkit-scrollbar { width: 4px; }
+    .doc-scroll::-webkit-scrollbar-track { background: transparent; }
+    .doc-scroll::-webkit-scrollbar-thumb { background: rgba(235,209,30,0.2); border-radius: 2px; }
+
+    /* Nhóm cấp */
+    .doc-group { border-bottom: 1px solid rgba(235,209,30,0.08); }
+    .doc-group:last-child { border-bottom: none; }
+
+    .doc-group-label {
+      font-family: 'Courier Prime', 'Courier New', monospace;
+      font-size: 9px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      padding: 8px 14px 5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .doc-group-label.cap1 { color: #7ecfff; }
+    .doc-group-label.cap2 { color: #ffb347; }
+    .doc-group-label.cap3 { color: #ff6b6b; }
+
+    .doc-group-label .lock-icon { font-size: 10px; opacity: 0.7; }
+
+    .doc-list {
+      list-style: none;
+      padding: 2px 0 6px;
+      margin: 0;
+    }
+
+    .doc-list li a {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 8px 14px;
+      color: rgba(245,240,232,0.75);
+      font-family: 'Lora', Georgia, serif;
+      font-size: 13px;
+      text-decoration: none;
+      transition: background 0.15s ease, color 0.15s ease;
+      line-height: 1.4;
+    }
+    .doc-list li a .doc-arrow {
+      font-size: 10px;
+      color: rgba(235,209,30,0.35);
+      flex-shrink: 0;
+      margin-top: 3px;
+      transition: color 0.15s ease;
+    }
+    .doc-list li a:hover { background: rgba(235,209,30,0.07); color: var(--paper); }
+    .doc-list li a:hover .doc-arrow { color: var(--gold); }
+
+    /* Trạng thái khoá */
+    .doc-list li a.locked {
+      opacity: 0.4;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    .doc-list li a.locked .doc-arrow { content: '🔒'; }
+
+    .doc-empty {
+      padding: 16px 14px;
+      font-family: 'Courier Prime', 'Courier New', monospace;
+      font-size: 11px;
+      color: rgba(245,240,232,0.25);
+      letter-spacing: 1px;
+      text-align: center;
+      display: none;
+    }
+
+    /* Countdown dưới icon */
+    .doc-countdown {
+      font-family: 'Courier Prime', 'Courier New', monospace;
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-align: center;
+      margin-top: 5px;
+      height: 14px;
+      transition: opacity 0.3s;
+    }
+    .doc-countdown.cap1 { color: #7ecfff; }
+    .doc-countdown.cap2 { color: #ffb347; }
+    .doc-countdown.cap3 { color: #ff6b6b; }
+
+    /* Banner khoá trong panel */
+    .doc-locked-banner {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: rgba(255,100,100,0.07);
+      border-bottom: 1px solid rgba(255,100,100,0.15);
+      font-family: 'Courier Prime', 'Courier New', monospace;
+      font-size: 10px;
+      letter-spacing: 1px;
+      color: #ff8a8a;
+      flex-shrink: 0;
+    }
+    .doc-locked-banner.visible { display: flex; }
+
+
+
+    /* ---- POPUP HƯỚNG DẪN ---- */
+    .tutorial-popup {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      backdrop-filter: blur(5px);
+      animation: fadeIn 0.3s ease;
+      padding: 16px;
+    }
+
+    .tutorial-content {
+      position: relative;
+      background: var(--dark2);
+      border: 1px solid rgba(235,209,30,0.35);
+      border-top: 4px solid var(--gold);
+      border-radius: 6px;
+      max-width: 440px;
+      width: 100%;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.9), 0 0 40px rgba(235,209,30,0.08);
+      animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    .tutorial-header {
+      padding: 22px 28px 16px;
+      border-bottom: 1px solid rgba(235,209,30,0.12);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .tutorial-header-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .tutorial-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 19px;
+      letter-spacing: 2px;
+      color: var(--gold);
+    }
+
+    .tutorial-body {
+      padding: 20px 28px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .tutorial-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(235,209,30,0.07);
+    }
+    .tutorial-row:last-child { border-bottom: none; }
+
+    .tutorial-icon-wrap {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(235,209,30,0.35);
+      background: var(--dark3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .tutorial-icon-wrap svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--gold);
+    }
+
+    .tutorial-icon-wrap.play-icon {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+    .tutorial-icon-wrap.play-icon svg { fill: var(--dark); }
+
+    .tutorial-icon-wrap.zalo-icon svg { fill: #0068ff; }
+
+    .tutorial-desc {
+      flex: 1;
+      padding-top: 2px;
+    }
+
+    .tutorial-desc-title {
+      font-family: 'Courier Prime', 'Courier New', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--gold);
+      text-transform: uppercase;
+      opacity: 0.8;
+      margin-bottom: 4px;
+    }
+
+    .tutorial-desc-text {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 14px;
+      color: rgba(245,240,232,0.65);
+      line-height: 1.5;
+    }
+
+    .tutorial-note {
+      margin: 8px 28px 24px;
+      padding: 13px 16px;
+      background: rgba(235,209,30,0.07);
+      border: 1px solid rgba(235,209,30,0.2);
+      border-left: 3px solid var(--gold);
+      border-radius: 3px;
+    }
+
+    .tutorial-note p {
+      font-family: 'Lora', Georgia, serif;
+      font-style: italic;
+      font-size: 13.5px;
+      color: rgba(245,240,232,0.6);
+      line-height: 1.6;
+    }
+
+    .tutorial-note p strong {
+      color: var(--gold);
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    .tutorial-close-wrap {
+      padding: 0 28px 24px;
+      text-align: center;
+    }
+
+    .tutorial-close-btn {
+      display: inline-block;
+      padding: 10px 36px;
+      background: var(--gold);
+      border: none;
+      color: var(--dark);
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 14px;
+      letter-spacing: 2px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 16px rgba(235,209,30,0.3);
+      width: auto;
+    }
+    .tutorial-close-btn:hover {
+      background: #f5df30;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(235,209,30,0.45);
     }
   </style>
 </head>
@@ -888,20 +1235,169 @@
 
   <div class="case-file">
 
-    <!-- ====== QUIZ — tự động render từ JS ====== -->
-    <div id="quiz-wrapper">
-      <!-- Banner + Card được inject bởi renderQuestion() -->
+    <!-- ====== QUIZ ====== -->
+    <div id="quiz">
+      <div class="case-banner">
+        <span class="badge">🔍 Điều Tra Viên</span>
+        <span class="case-id">MÃ VỤ ÁN: D-14032014</span>
+      </div>
+
+      <div class="card">
+        <div class="case-label">— Nhiệm Vụ 2 —</div>
+        <h2>Xác Định Hung Thủ Của Các Vụ Án</h2>
+
+        <div class="divider"><span class="divider-icon">⬡</span></div>
+
+        <p class="subtitle">Xem xét toàn bộ hồ sơ và đưa ra nhận định<br>dựa trên các tài liệu bằng chứng đã thu thập</p>
+
+        <div class="instruction">
+          <span>⬡ CHỌN ĐÁP ÁN ĐÚNG CHO TỪNG CÂU HỎI ⬡</span>
+        </div>
+
+        <!-- CÂU HỎI 1 -->
+        <div id="q1-block" style="margin-bottom: 28px;">
+          <p style="font-family:'Courier Prime','Courier New',monospace; font-size:10px; letter-spacing:3px; color:var(--gold); opacity:0.7; text-transform:uppercase; margin-bottom:10px;">— Câu Hỏi 01 / 03 —</p>
+          <p style="font-family:'Lora',Georgia,serif; font-size:17px; color:var(--paper); margin-bottom:18px; line-height:1.5;">
+            Ai là hung thủ của Vụ án Phạm Minh Châu?
+          </p>
+          <ul class="answers" id="q1-answers">
+            <li><input type="radio" name="q1" value="wrong" id="q1a"><label for="q1a"><div class="check-box"></div><span class="evidence-num">A</span>Trần Minh Khoa</label></li>
+            <li><input type="radio" name="q1" value="wrong" id="q1b"><label for="q1b"><div class="check-box"></div><span class="evidence-num">B</span>Lê Thu Thảo</label></li>
+            <li><input type="radio" name="q1" value="wrong" id="q1c"><label for="q1c"><div class="check-box"></div><span class="evidence-num">C</span>Phạm Gia Phú</label></li>
+            <li><input type="radio" name="q1" value="correct" id="q1d"><label for="q1d"><div class="check-box"></div><span class="evidence-num">D</span>Lê Khả Hân</label></li>
+            <li><input type="radio" name="q1" value="wrong" id="q1e"><label for="q1e"><div class="check-box"></div><span class="evidence-num">E</span>Đặng Nhật Đông</label></li>
+            <li><input type="radio" name="q1" value="wrong" id="q1f"><label for="q1f"><div class="check-box"></div><span class="evidence-num">F</span>Vũ Hà Nam</label></li>
+            <li><input type="radio" name="q1" value="wrong" id="q1g"><label for="q1g"><div class="check-box"></div><span class="evidence-num">G</span>Nguyễn Văn Thọ</label></li>
+            <li><input type="radio" name="q1" value="wrong" id="q1h"><label for="q1h"><div class="check-box"></div><span class="evidence-num">H</span>Võ Tấn Bình</label></li>
+          </ul>
+        </div>
+
+        <!-- CÂU HỎI 2 — ẩn ban đầu -->
+        <div id="q2-block" style="display:none; margin-bottom: 28px;">
+          <p style="font-family:'Courier Prime','Courier New',monospace; font-size:10px; letter-spacing:3px; color:var(--gold); opacity:0.7; text-transform:uppercase; margin-bottom:10px;">— Câu Hỏi 02 / 03 —</p>
+          <p style="font-family:'Lora',Georgia,serif; font-size:17px; color:var(--paper); margin-bottom:18px; line-height:1.5;">
+            Ai là hung thủ của Vụ án cháy căn nhà gỗ?
+          </p>
+          <ul class="answers" id="q2-answers">
+            <li><input type="radio" name="q2" value="wrong" id="q2a"><label for="q2a"><div class="check-box"></div><span class="evidence-num">A</span>Trần Minh Khoa</label></li>
+            <li><input type="radio" name="q2" value="wrong" id="q2b"><label for="q2b"><div class="check-box"></div><span class="evidence-num">B</span>Lê Thu Thảo</label></li>
+            <li><input type="radio" name="q2" value="wrong" id="q2c"><label for="q2c"><div class="check-box"></div><span class="evidence-num">C</span>Phạm Gia Phú</label></li>
+            <li><input type="radio" name="q2" value="correct" id="q2d"><label for="q2d"><div class="check-box"></div><span class="evidence-num">D</span>Lê Khả Hân</label></li>
+            <li><input type="radio" name="q2" value="wrong" id="q2e"><label for="q2e"><div class="check-box"></div><span class="evidence-num">E</span>Đặng Nhật Đông</label></li>
+            <li><input type="radio" name="q2" value="wrong" id="q2f"><label for="q2f"><div class="check-box"></div><span class="evidence-num">F</span>Vũ Hà Nam</label></li>
+            <li><input type="radio" name="q2" value="wrong" id="q2g"><label for="q2g"><div class="check-box"></div><span class="evidence-num">G</span>Nguyễn Văn Thọ</label></li>
+            <li><input type="radio" name="q2" value="wrong" id="q2h"><label for="q2h"><div class="check-box"></div><span class="evidence-num">H</span>Võ Tấn Bình</label></li>
+          </ul>
+        </div>
+
+        <!-- CÂU HỎI 3 — ẩn ban đầu -->
+
+        <div id="q3-block" style="display:none; margin-bottom: 28px;">
+          <p style="font-family:'Courier Prime','Courier New',monospace; font-size:10px; letter-spacing:3px; color:var(--gold); opacity:0.7; text-transform:uppercase; margin-bottom:10px;">— Câu Hỏi 03 / 03 —</p>
+          <p style="font-family:'Lora',Georgia,serif; font-size:17px; color:var(--paper); margin-bottom:8px; line-height:1.5;">
+            Những tài liệu nào khiến bạn đưa ra kết luận trên?
+          </p>
+          <p style="font-family:'Courier Prime','Courier New',monospace; font-size:10px; color:rgba(235,209,30,0.55); letter-spacing:1px; margin-bottom:18px;">⬡ Chọn ít nhất 4 tài liệu đúng — không được chọn sai</p>
+          <ul class="answers" id="q3-answers">
+            <li><input type="checkbox" name="q3" value="wrong" id="q3_1"><label for="q3_1"><div class="check-box"></div><span class="evidence-num"></span>Báo cáo vụ án - cháy căn nhà gỗ bên hồ Đại Lâm</label></li>
+            <li><input type="checkbox" name="q3" value="wrong" id="q3_2"><label for="q3_2"><div class="check-box"></div><span class="evidence-num"></span>Câu Hỏi về nạn nhân - Phạm Gia Hưng</label></li>
+            <li><input type="checkbox" name="q3" value="wrong" id="q3_3"><label for="q3_3"><div class="check-box"></div><span class="evidence-num"></span>Lời Khai Nhân Chứng - Lê Thu Thảo</label></li>
+            <li><input type="checkbox" name="q3" value="wrong" id="q3_4"><label for="q3_4"><div class="check-box"></div><span class="evidence-num"></span>Lời Khai Nhân Chứng - Trần Thị Mai Anh</label></li>
+            <li><input type="checkbox" name="q3" value="wrong" id="q3_5"><label for="q3_5"><div class="check-box"></div><span class="evidence-num"></span>Lời Khai Nhân Chứng - Trần Văn Tính</label></li>
+            <li><input type="checkbox" name="q3" value="wrong" id="q3_6"><label for="q3_6"><div class="check-box"></div><span class="evidence-num"></span>Lời Khai Nghi Phạm - Phạm Gia Phú 1</label></li>
+            <li><input type="checkbox" name="q3" value="wrong" id="q3_7"><label for="q3_7"><div class="check-box"></div><span class="evidence-num"></span>Lời Khai Nghi Phạm - Nguyễn Văn Thọ</label></li>
+            <li><input type="checkbox" name="q3" value="wrong" id="q3_8"><label for="q3_8"><div class="check-box"></div><span class="evidence-num"></span>Lời Khai Nghi Phạm - Đặng Nhật Đông</label></li>
+            <li><input type="checkbox" name="q3" value="correct" id="q3_9"><label for="q3_9"><div class="check-box"></div><span class="evidence-num"></span>Giám Định Mẫu Vật - Dây chuyền bạc</label></li>
+            <li><input type="checkbox" name="q3" value="wrong" id="q3_10"><label for="q3_10"><div class="check-box"></div><span class="evidence-num"></span>Giám Định Mẫu Vật - Đầu thuốc lá (3 mẫu)</label></li>
+            <li><input type="checkbox" name="q3" value="wrong" id="q3_11"><label for="q3_11"><div class="check-box"></div><span class="evidence-num"></span>Giám Định Mẫu Vật - Bật Lửa Zippo (kim loại)</label></li>
+            <li><input type="checkbox" name="q3" value="wrong" id="q3_12"><label for="q3_12"><div class="check-box"></div><span class="evidence-num"></span>Báo cáo khám nghiệm tử thi - Nạn Nhân 1</label></li>
+            <li><input type="checkbox" name="q3" value="wrong" id="q3_13"><label for="q3_13"><div class="check-box"></div><span class="evidence-num"></span>Báo cáo khám nghiệm tử thi - Nạn Nhân 2</label></li>
+            <li><input type="checkbox" name="q3" value="wrong" id="q3_14"><label for="q3_14"><div class="check-box"></div><span class="evidence-num"></span>Hồ sơ cá nhân - Phạm Gia Hưng</label></li>
+            <li><input type="checkbox" name="q3" value="wrong" id="q3_15"><label for="q3_15"><div class="check-box"></div><span class="evidence-num"></span>Hồ sơ cá nhân - Phạm Gia Phú</label></li>
+            <li><input type="checkbox" name="q3" value="correct" id="q3_16"><label for="q3_16"><div class="check-box"></div><span class="evidence-num"></span>Bài báo Giấy</label></li>
+            <li><input type="checkbox" name="q3" value="wrong" id="q3_17"><label for="q3_17"><div class="check-box"></div><span class="evidence-num"></span>Bài Báo Mạng</label></li>
+            <li><input type="checkbox" name="q3" value="wrong" id="q3_18"><label for="q3_18"><div class="check-box"></div><span class="evidence-num"></span>Báo cáo vụ án - Phạm Minh Châu</label></li>
+            <li><input type="checkbox" name="q3" value="wrong" id="q3_19"><label for="q3_19"><div class="check-box"></div><span class="evidence-num"></span>Lời Khai Nhân Chứng - Lê Hoàng Minh Hằng</label></li>
+            <li><input type="checkbox" name="q3" value="wrong" id="q3_20"><label for="q3_20"><div class="check-box"></div><span class="evidence-num"></span>Lời Khai Nhân Chứng - Lê Nhật Hoàng</label></li>
+            <li><input type="checkbox" name="q3" value="wrong" id="q3_21"><label for="q3_21"><div class="check-box"></div><span class="evidence-num"></span>Lời Khai Nghi Phạm - Trần Minh Khoa</label></li>
+            <li><input type="checkbox" name="q3" value="wrong" id="q3_22"><label for="q3_22"><div class="check-box"></div><span class="evidence-num"></span>Lời Khai Nghi Phạm - Phạm Gia Phú 2</label></li>
+            <li><input type="checkbox" name="q3" value="wrong" id="q3_23"><label for="q3_23"><div class="check-box"></div><span class="evidence-num"></span>Lời Khai Nghi Phạm - Vũ Hà Nam</label></li>
+            <li><input type="checkbox" name="q3" value="wrong" id="q3_24"><label for="q3_24"><div class="check-box"></div><span class="evidence-num"></span>Báo cáo khám nghiệm tử thi - Phạm Minh Châu</label></li>
+            <li><input type="checkbox" name="q3" value="wrong" id="q3_25"><label for="q3_25"><div class="check-box"></div><span class="evidence-num"></span>Ảnh Vụ án - cháy căn nhà gỗ bên hồ Đại Lâm</label></li>
+            <li><input type="checkbox" name="q3" value="correct" id="q3_26"><label for="q3_26"><div class="check-box"></div><span class="evidence-num"></span>Ảnh Vụ án - Phạm Minh Châu</label></li>
+            <li><input type="checkbox" name="q3" value="correct" id="q3_27"><label for="q3_27"><div class="check-box"></div><span class="evidence-num"></span>Ảnh Vũ Hà Nam</label></li>
+            <li><input type="checkbox" name="q3" value="correct" id="q3_28"><label for="q3_28"><div class="check-box"></div><span class="evidence-num"></span>Lời thú tội mẹ Lê Thu Thảo</label></li>
+            <li><input type="checkbox" name="q3" value="wrong" id="q3_29"><label for="q3_29"><div class="check-box"></div><span class="evidence-num"></span>Lời Khai Nghi Phạm - Lê Thu Thảo</label></li>
+            <li><input type="checkbox" name="q3" value="wrong" id="q3_30"><label for="q3_30"><div class="check-box"></div><span class="evidence-num"></span>Báo cáo khám nghiệm tử thi - Phạm Minh Châu</label></li>
+            <!-- Hồ sơ cá nhân Lê Khả Hân sẽ xuất hiện ở đây khi được mở khoá -->
+            <!-- Tài liệu được thêm từ yêu cầu hồ sơ sẽ xuất hiện ở đây -->
+          </ul>
+        </div>
+
+        <!-- CÂU HỎI 4 — KHÔNG DÙNG NỮA, ẨN -->
+        <div id="q4-block" style="display:none; margin-bottom: 28px;">
+          <p style="font-family:'Courier Prime','Courier New',monospace; font-size:10px; letter-spacing:3px; color:var(--gold); opacity:0.7; text-transform:uppercase; margin-bottom:10px;">— Câu Hỏi 04 / 04 —</p>
+          <p style="font-family:'Lora',Georgia,serif; font-size:17px; color:var(--paper); margin-bottom:8px; line-height:1.5;">
+            Tài liệu nào khiến bạn đưa ra kết luận?
+          </p>
+          <p style="font-family:'Courier Prime','Courier New',monospace; font-size:10px; color:rgba(235,209,30,0.55); letter-spacing:1px; margin-bottom:18px;">⬡ Chọn ít nhất 2 tài liệu đúng — không được chọn sai</p>
+          <ul class="answers" id="q4-answers">
+            <li><input type="checkbox" name="q4" value="wrong" id="q4_1"><label for="q4_1"><div class="check-box"></div><span class="evidence-num"></span>Báo cáo vụ án - cháy căn nhà gỗ bên hồ Đại Lâm</label></li>
+            <li><input type="checkbox" name="q4" value="wrong" id="q4_2"><label for="q4_2"><div class="check-box"></div><span class="evidence-num"></span>Câu Hỏi về nạn nhân - Phạm Gia Hưng</label></li>
+            <li><input type="checkbox" name="q4" value="wrong" id="q4_3"><label for="q4_3"><div class="check-box"></div><span class="evidence-num"></span>Lời Khai Nhân Chứng - Lê Thu Thảo</label></li>
+            <li><input type="checkbox" name="q4" value="wrong" id="q4_4"><label for="q4_4"><div class="check-box"></div><span class="evidence-num"></span>Lời Khai Nhân Chứng - Trần Thị Mai Anh</label></li>
+            <li><input type="checkbox" name="q4" value="wrong" id="q4_5"><label for="q4_5"><div class="check-box"></div><span class="evidence-num"></span>Lời Khai Nhân Chứng - Trần Văn Tính</label></li>
+            <li><input type="checkbox" name="q4" value="wrong" id="q4_6"><label for="q4_6"><div class="check-box"></div><span class="evidence-num"></span>Lời Khai Nghi Phạm - Phạm Gia Phú 1</label></li>
+            <li><input type="checkbox" name="q4" value="wrong" id="q4_7"><label for="q4_7"><div class="check-box"></div><span class="evidence-num"></span>Lời Khai Nghi Phạm - Nguyễn Văn Thọ</label></li>
+            <li><input type="checkbox" name="q4" value="wrong" id="q4_8"><label for="q4_8"><div class="check-box"></div><span class="evidence-num"></span>Lời Khai Nghi Phạm - Đặng Nhật Đông</label></li>
+            <li><input type="checkbox" name="q4" value="wrong" id="q4_9"><label for="q4_9"><div class="check-box"></div><span class="evidence-num"></span>Giám Định Mẫu Vật - Dây chuyền bạc</label></li>
+            <li><input type="checkbox" name="q4" value="wrong" id="q4_10"><label for="q4_10"><div class="check-box"></div><span class="evidence-num"></span>Giám Định Mẫu Vật - Đầu thuốc lá (3 mẫu)</label></li>
+            <li><input type="checkbox" name="q4" value="wrong" id="q4_11"><label for="q4_11"><div class="check-box"></div><span class="evidence-num"></span>Giám Định Mẫu Vật - Bật Lửa Zippo (kim loại)</label></li>
+            <li><input type="checkbox" name="q4" value="wrong" id="q4_12"><label for="q4_12"><div class="check-box"></div><span class="evidence-num"></span>Báo cáo khám nghiệm tử thi - Nạn Nhân 1</label></li>
+            <li><input type="checkbox" name="q4" value="wrong" id="q4_13"><label for="q4_13"><div class="check-box"></div><span class="evidence-num"></span>Báo cáo khám nghiệm tử thi - Nạn Nhân 2</label></li>
+            <li><input type="checkbox" name="q4" value="wrong" id="q4_14"><label for="q4_14"><div class="check-box"></div><span class="evidence-num"></span>Hồ sơ cá nhân - Phạm Gia Hưng</label></li>
+            <li><input type="checkbox" name="q4" value="wrong" id="q4_15"><label for="q4_15"><div class="check-box"></div><span class="evidence-num"></span>Hồ sơ cá nhân - Phạm Gia Phú</label></li>
+            <li><input type="checkbox" name="q4" value="wrong" id="q4_16"><label for="q4_16"><div class="check-box"></div><span class="evidence-num"></span>Bài báo Giấy</label></li>
+            <li><input type="checkbox" name="q4" value="wrong" id="q4_17"><label for="q4_17"><div class="check-box"></div><span class="evidence-num"></span>Bài Báo Mạng</label></li>
+            <li><input type="checkbox" name="q4" value="wrong" id="q4_18"><label for="q4_18"><div class="check-box"></div><span class="evidence-num"></span>Báo cáo vụ án - Phạm Minh Châu</label></li>
+            <li><input type="checkbox" name="q4" value="wrong" id="q4_19"><label for="q4_19"><div class="check-box"></div><span class="evidence-num"></span>Lời Khai Nhân Chứng - Lê Hoàng Minh Hằng</label></li>
+            <li><input type="checkbox" name="q4" value="wrong" id="q4_20"><label for="q4_20"><div class="check-box"></div><span class="evidence-num"></span>Lời Khai Nhân Chứng - Lê Nhật Hoàng</label></li>
+            <li><input type="checkbox" name="q4" value="wrong" id="q4_21"><label for="q4_21"><div class="check-box"></div><span class="evidence-num"></span>Lời Khai Nghi Phạm - Trần Minh Khoa</label></li>
+            <li><input type="checkbox" name="q4" value="wrong" id="q4_22"><label for="q4_22"><div class="check-box"></div><span class="evidence-num"></span>Lời Khai Nghi Phạm - Phạm Gia Phú 2</label></li>
+            <li><input type="checkbox" name="q4" value="correct" id="q4_23"><label for="q4_23"><div class="check-box"></div><span class="evidence-num"></span>Lời Khai Nghi Phạm - Vũ Hà Nam</label></li>
+            <li><input type="checkbox" name="q4" value="wrong" id="q4_24"><label for="q4_24"><div class="check-box"></div><span class="evidence-num"></span>Báo cáo khám nghiệm tử thi - Phạm Minh Châu</label></li>
+            <li><input type="checkbox" name="q4" value="wrong" id="q4_25"><label for="q4_25"><div class="check-box"></div><span class="evidence-num"></span>Ảnh Vụ án - cháy căn nhà gỗ bên hồ Đại Lâm</label></li>
+            <li><input type="checkbox" name="q4" value="wrong" id="q4_26"><label for="q4_26"><div class="check-box"></div><span class="evidence-num"></span>Ảnh Vụ án - Phạm Minh Châu</label></li>
+            <li><input type="checkbox" name="q4" value="correct" id="q4_27"><label for="q4_27"><div class="check-box"></div><span class="evidence-num"></span>Ảnh hiện trường bổ sung - ngôi nhà gỗ (cột điện, hộp điện)</label></li>
+            <!-- Tài liệu được thêm từ yêu cầu hồ sơ sẽ xuất hiện ở đây -->
+          </ul>
+        </div>
+          <button class="btn-submit" onclick="checkAnswers()">XÁC NHẬN PHÂN TÍCH</button>
+
+          <button class="btn-hint" onclick="showHintPopup()">
+            <span class="hint-title">⬡ GỢI Ý</span>
+            <span class="hint-sub">chỉ sử dụng khi đã rất bế tắc</span>
+          </button>
+        </div>
+
+        <div class="case-footer">
+          <span class="footer-mono">BẢO MẬT — CẤP ĐỘ 3</span>
+          <span class="footer-mono">2026 · HỒ SƠ MẬT</span>
+        </div>
+      </div>
     </div>
 
-    <!-- ====== RESULT ====== -->
-    <div id="result-img" style="display:none;">
+  </div><!-- /.case-file -->
+
+  <!-- ====== RESULT ====== -->
+  <div id="result-img" style="display:none; position:fixed; inset:0; z-index:500; overflow-y:auto; background:var(--dark3); padding:30px 16px;">
+    <div style="width:100%; max-width:720px; margin:0 auto;">
       <div class="case-banner">
-        <span class="badge">✔ VỤ ÁN ĐƯỢC GIẢI QUYẾT</span>
-        <span class="case-id">MÃ VỤ ÁN: D-26082019</span>
+        <span class="badge">✔ KẾT QUẢ PHÂN TÍCH</span>
+        <span class="case-id">MÃ VỤ ÁN: #VN-0048</span>
       </div>
       <div class="card result-card">
-        <img id="result-image" src="" alt="Kết quả">
-
+        <img id="result-image" src="" alt="Kết quả" style="width:100%;height:auto;display:block;">
         <div class="result-nav">
           <button class="btn-nav btn-back" onclick="goBack()">
             <span class="nav-arrow">←</span>
@@ -910,11 +1406,6 @@
               <span class="nav-sub">Thử lại từ đầu</span>
             </span>
           </button>
-
-          <!-- ══════════════════════════════════════════════
-               [TIẾP TỤC] ← ĐIỀN LINK TRANG TIẾP THEO VÀO
-               biến NEXT_PAGE_URL bên dưới trong thẻ <script>
-               ══════════════════════════════════════════════ -->
           <button class="btn-nav btn-next" onclick="goNext()">
             <span class="nav-text">
               <span class="nav-title">TIẾP TỤC</span>
@@ -925,8 +1416,7 @@
         </div>
       </div>
     </div>
-
-  </div><!-- /.case-file -->
+  </div>
 
 
   <!-- ====== POPUP SAI ====== -->
@@ -955,8 +1445,8 @@
         <img id="hint-popup-img" src="" alt="Gợi ý">
       </div>
       <div class="popup-body">
-        <div class="popup-title">GỢI Ý</div>
-        <p class="popup-msg">
+        <div class="popup-title" id="hint-popup-title">GỢI Ý 1</div>
+        <p class="popup-msg" id="hint-popup-msg">
           Đây là manh mối dành cho bạn.<br>
           Hãy suy nghĩ thật kỹ trước khi đưa ra quyết định.
         </p>
@@ -966,30 +1456,113 @@
   </div>
 
   <script>
-    function checkAnswers() {
-      let selected = [];
-      document.querySelectorAll('#q1 input[type="checkbox"]:checked').forEach(cb => {
-        selected.push(parseInt(cb.value));
+    // ══════════════════════════════════════════════════════════════════
+    // LOGIC 4 CÂU HỎI + TÀI LIỆU ĐỘNG
+    // ══════════════════════════════════════════════════════════════════
+    let currentQuestion = 1;
+
+    // Tên tài liệu đã được thêm từ yêu cầu hồ sơ (để không thêm trùng)
+    const addedDocNames = new Set();
+    let dynamicDocCounter = 1000; // id counter cho tài liệu động
+
+    // Khi người chơi click tài liệu trong panel → thêm vào câu 2 và câu 4
+    // correctForQ2: true nếu là đáp án đúng câu 2, correctForQ4: true nếu đáp án đúng câu 4
+    function injectDocToQuiz(docName, correctForQ2, correctForQ4) {
+      if (addedDocNames.has(docName)) return;
+      addedDocNames.add(docName);
+
+      // Inject vào câu 3 (tài liệu)
+      const normName = normalizeLabel(docName);
+      const isCorrectQ3 = Q3_CORRECT.has(normName);
+      const ul = document.getElementById('q3-answers');
+      if (ul) {
+        const id = 'dq3_' + dynamicDocCounter;
+        const val = isCorrectQ3 ? 'correct' : 'wrong';
+        const li = document.createElement('li');
+        li.innerHTML = `<input type="checkbox" name="q3" value="${val}" id="${id}">
+          <label for="${id}"><div class="check-box"></div><span class="evidence-num" style="font-size:8px;color:rgba(235,209,30,0.6);">MỚI</span>${docName}</label>`;
+        ul.appendChild(li);
+      }
+      dynamicDocCounter++;
+    }
+
+    // Theo dõi tài liệu đã mở để hiện tài liệu phụ thuộc
+    const openedDocs = new Set();
+
+    // Tập đáp án đúng câu 3 (cần chọn đúng ít nhất 4)
+    const Q3_CORRECT = new Set([
+      "ảnh vụ án - phạm minh châu",
+      "bài báo giấy",
+      "hồ sơ cá nhân lê khả hân",
+      "ảnh vũ hà nam",
+      "giám định mẫu vật - dây chuyền bạc",
+      "lời thú tội mẹ lê thu thảo",
+    ]);
+
+    // Giữ lại để injectDocToQuiz dùng (không còn câu 2/4 cũ)
+    const Q2_CORRECT = new Set([]);
+    const Q4_CORRECT = new Set([]);
+
+    function normalizeLabel(text) {
+      return text.trim().toLowerCase().replace(/\s+/g, ' ');
+    }
+
+    function countCorrectSelected(qName, correctSet) {
+      const checked = document.querySelectorAll(`input[name="${qName}"]:checked`);
+      let correct = 0, wrong = 0;
+      checked.forEach(inp => {
+        const label = inp.closest('li').querySelector('label');
+        // Lấy text bỏ "MỚI" badge
+        const spans = label.querySelectorAll('span');
+        let text = label.textContent;
+        spans.forEach(s => { text = text.replace(s.textContent, ''); });
+        const norm = normalizeLabel(text);
+        if (correctSet.has(norm)) correct++; else wrong++;
       });
+      return { correct, wrong, total: checked.length };
+    }
 
-      if (selected.length !== 3) {
-        alert("⚠ Bạn phải chọn đúng 3 vật chứng!");
-        return;
+    function checkAnswers() {
+      if (currentQuestion === 1) {
+        const selected = document.querySelector('input[name="q1"]:checked');
+        if (!selected) { alert("⚠ Bạn chưa chọn đáp án!"); return; }
+        if (selected.value === 'correct') {
+          currentQuestion = 2;
+          document.getElementById('q1-block').style.display = 'none';
+          document.getElementById('q2-block').style.display = 'block';
+          document.querySelector('.btn-submit').textContent = 'XÁC NHẬN ĐÁP ÁN';
+        } else {
+          showWrongPopup();
+        }
+      } else if (currentQuestion === 2) {
+        const selected = document.querySelector('input[name="q2"]:checked');
+        if (!selected) { alert("⚠ Bạn chưa chọn đáp án!"); return; }
+        if (selected.value === 'correct') {
+          currentQuestion = 3;
+          document.getElementById('q2-block').style.display = 'none';
+          document.getElementById('q3-block').style.display = 'block';
+          document.querySelector('.btn-submit').textContent = 'XÁC NHẬN KẾT LUẬN';
+        } else {
+          showWrongPopup();
+        }
+      } else if (currentQuestion === 3) {
+        const checked = document.querySelectorAll('input[name="q3"]:checked');
+        if (checked.length === 0) { alert("⚠ Bạn chưa chọn tài liệu!"); return; }
+        const { correct, wrong } = countCorrectSelected('q3', Q3_CORRECT);
+        if (correct >= 4 && wrong === 0) {
+          document.getElementById('result-img').style.display = 'block';
+          document.getElementById('result-image').src =
+            "https://raw.githubusercontent.com/designdaovn/Hosomat-acgiaacbao/refs/heads/main/Giai%20thich%20copy.jpg";
+        } else {
+          showWrongPopup();
+        }
       }
+    }
 
-      const correct = [6, 9, 12];
-      selected.sort((a, b) => a - b);
-
-      if (JSON.stringify(selected) === JSON.stringify(correct)) {
-        document.getElementById('quiz').style.display = 'none';
-        document.getElementById('result-img').style.display = 'block';
-        document.getElementById('result-image').src =
-          "https://raw.githubusercontent.com/designdaovn/Hosomat-acgiaacbao/refs/heads/main/Giai%20thich%20copy.jpg";
-      } else {
-        document.getElementById('popup-img').src =
-          "https://raw.githubusercontent.com/designdaovn/Hosomat-acgiaacbao/refs/heads/main/pupup-chonsai.png";
-        document.getElementById('popup').style.display = 'flex';
-      }
+    function showWrongPopup() {
+      document.getElementById('popup-img').src =
+        "https://raw.githubusercontent.com/designdaovn/Hosomat-acgiaacbao/refs/heads/main/pupup-chonsai.png";
+      document.getElementById('popup').style.display = 'flex';
     }
 
     function closePopup(id) {
@@ -1001,16 +1574,42 @@
     // [LINK TRANG TIẾP THEO] ← THAY URL Ở ĐÂY
     // Ví dụ: const NEXT_PAGE_URL = "https://example.com/nhiem-vu-2";
     // ══════════════════════════════════════════════════════
-    const NEXT_PAGE_URL = "https://shopee.vn/designdaovn?entryPoint=ShopBySearch&searchKeyword=designdao";
+    const NEXT_PAGE_URL = "https://designdaovn.github.io/Vongxoaytoiac_nhiemvu3/";
 
     function goNext() {
       window.location.href = NEXT_PAGE_URL;
     }
 
-    // goBack() defined in quiz engine above
+    function goBack() {
+      currentQuestion = 1;
+      document.querySelectorAll('input[name="q1"], input[name="q2"], input[name="q3"]').forEach(r => r.checked = false);
+      document.getElementById('q1-block').style.display = 'block';
+      document.getElementById('q2-block').style.display = 'none';
+      document.getElementById('q3-block').style.display = 'none';
+      document.querySelector('.btn-submit').textContent = 'XÁC NHẬN PHÂN TÍCH';
+      document.getElementById('result-img').style.display = 'none';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ══════════════════════════════════════════════════
+    // GỢI Ý — 2 cấp độ
+    // ══════════════════════════════════════════════════
+    // [THAY LINK ẢNH GỢI Ý Ở ĐÂY]
+    const HINT_1_IMAGE_URL = "https://raw.githubusercontent.com/designdaovn/Hosomat-acgiaacbao/refs/heads/main/goi%20y%201.png";
+    const HINT_2_IMAGE_URL = "https://raw.githubusercontent.com/designdaovn/Hosomat-acgiaacbao/refs/heads/main/goi%20y%202.png";
+
+    let hintUsedCount = 0; // đếm số lần bấm gợi ý
 
     function showHintPopup() {
-      document.getElementById('hint-popup-img').src = HINT_IMAGE_Q1;
+      hintUsedCount++;
+      const isHint1 = hintUsedCount === 1;
+
+      document.getElementById('hint-popup-img').src = isHint1 ? HINT_1_IMAGE_URL : HINT_2_IMAGE_URL;
+      document.getElementById('hint-popup-title').textContent = isHint1 ? 'GỢI Ý 1' : 'GỢI Ý 2';
+      document.getElementById('hint-popup-msg').innerHTML = isHint1
+        ? 'Đây là manh mối đầu tiên dành cho bạn.<br>Hãy suy nghĩ thật kỹ trước khi đưa ra quyết định.'
+        : 'Đây là manh mối cuối cùng dành cho bạn.<br>Tin vào bản năng điều tra của mình!';
+
       document.getElementById('hint-popup').style.display = 'flex';
     }
 
@@ -1027,219 +1626,6 @@
         document.querySelectorAll('.popup').forEach(p => p.style.display = 'none');
       }
     });
-    // ══════════════════════════════════════════════════════════
-    // NHIỆM VỤ CUỐI — CẤU HÌNH NỘI DUNG
-    // ══════════════════════════════════════════════════════════
-
-    const QUESTIONS = [
-      // ── CÂU HỎI 1 ──────────────────────────────────────────
-      {
-        step: 1,
-        label: "— Phân Tích Bằng Chứng —",
-        title: "Những Vật Chứng Khiến Bạn Nghi Ngờ Hung Thủ?",
-        subtitle: "Hãy chọn những vật chứng, tài liệu, hình ảnh<br>khiến bạn nghi ngờ hung thủ của vụ án",
-        // hasHint: true → hiện nút Gợi ý; false → ẩn
-        hasHint: true,
-        groups: [
-          {
-            // ── NHÓM A ─────────────────────────────────────
-            title: "a. Tài liệu, giấy tờ của vụ án",
-            items: [
-              "Báo cáo vụ án",                                    // 0
-              "Câu hỏi về nạn nhân",                              // 1
-              "Lời khai nhân chứng: Nguyễn Văn Hải",             // 2
-              "Lời khai nhân chứng: Nguyễn Thị Lan",             // 3
-              "Lời khai nhân chứng: Nguyễn Nhật Linh",           // 4
-              "Lời khai nghi phạm: Nguyễn Ngọc",                 // 5
-              "Lời khai nghi phạm: Vũ Hải Yến",                  // 6
-              "Lời khai nghi phạm: Trần Minh Tiến",              // 7
-              "Lời khai nghi phạm: Lại Vũ Bình",                 // 8
-              "Ảnh hiện trường",                                  // 9
-              "Giám định mẫu vật: Con dao",                       // 10
-              "Giám định mẫu vật: Dấu giày",                     // 11
-              "Giám định mẫu vật: Chai Rượu",                    // 12
-              "Danh sách cuộc gọi cuối của nạn nhân",            // 13 ✓
-              "Thư của người ẩn danh",                           // 14 ✓
-              "Thông tin người có liên quan: Nguyễn Ngọc",       // 15
-              "Thông tin người có liên quan: Trần Minh Tiến",    // 16
-              "Thông tin người có liên quan: Vũ Hải Yến",        // 17
-              "Thông tin người có liên quan: Lại Vũ Bình"        // 18 ✓
-            ],
-            // ── ĐÁP ÁN ĐÚNG NHÓM A (index từ 0) ──
-            correct: [13, 14, 18]
-          },
-          {
-            // ── NHÓM B ─────────────────────────────────────
-            title: "b. Ảnh vụ án",
-            items: [
-              "Ảnh Nhân vật",               // 0 ✓
-              "Ảnh hiện trường",             // 1
-              "Ảnh người ẩn danh cung cấp"  // 2 ✓
-            ],
-            // ── ĐÁP ÁN ĐÚNG NHÓM B (index từ 0) ──
-            correct: [0, 2]
-          }
-        ]
-      },
-
-      // ── CÂU HỎI 2 ──────────────────────────────────────────
-      {
-        step: 2,
-        label: "— Kết Luận Điều Tra —",
-        title: "Ai Là Hung Thủ Đã Giết Chết Nạn Nhân?",
-        subtitle: "Dựa trên toàn bộ bằng chứng, hãy chỉ ra kẻ thủ ác",
-        hasHint: false,
-        groups: [
-          {
-            title: "",
-            items: [
-              "Nguyễn Ngọc",       // 0
-              "Vũ Hải Yến",        // 1
-              "Trần Minh Tiến",    // 2
-              "Lại Vũ Bình",       // 3
-              "Ninh Quang Long"    // 4 ✓
-            ],
-            // ── ĐÁP ÁN ĐÚNG CÂU 2 (index từ 0) ──
-            correct: [4]
-          }
-        ],
-        // ── ẢNH KẾT QUẢ SAU KHI ĐÚNG CÂU CUỐI ──
-        resultImage: "nhiemvu3_Giaithich.jpg"
-      }
-    ];
-
-    // ══════════════════════════════════════════════════════════
-    // ẢNH POPUP GỢI Ý CÂU 1 — THAY LINK Ở ĐÂY
-    // ══════════════════════════════════════════════════════════
-    const HINT_IMAGE_Q1 = "https://i.imgur.com/0DElr0H.jpeg";
-
-    // ══════════════════════════════════════════════════════════
-    // ENGINE — không cần sửa bên dưới
-    // ══════════════════════════════════════════════════════════
-    let currentQ = 0;
-
-    function renderQuestion(index) {
-      const q = QUESTIONS[index];
-      const totalSteps = QUESTIONS.length;
-
-      // Step dots
-      const dots = Array.from({length: totalSteps}, (_, i) => {
-        const cls = i < index ? 'done' : i === index ? 'active' : '';
-        return `<div class="step-dot ${cls}"></div>`;
-      }).join('');
-
-      // Groups HTML
-      const groupsHtml = q.groups.map((g, gi) => {
-        const prefix = `q${index}g${gi}`;
-        const itemCount = g.correct.length;
-        const groupInstruction = itemCount === 1
-          ? `CHỌN ĐÚNG 1 ĐÁP ÁN`
-          : `CHỌN ĐÚNG ${itemCount} ĐÁP ÁN`;
-
-        const items = g.items.map((text, i) => `
-          <li>
-            <input type="checkbox" value="${i}" id="${prefix}i${i}">
-            <label for="${prefix}i${i}">
-              <div class="check-box"></div>
-              <span class="evidence-num">E-${String(i+1).padStart(2,'0')}</span>
-              ${text}
-            </label>
-          </li>`).join('');
-
-        return `
-          ${g.title ? `<div class="group-title">${g.title}</div>` : ''}
-          <div class="instruction" style="margin-bottom:14px;">
-            <span>⬡ ${groupInstruction} ⬡</span>
-          </div>
-          <ul class="answers" id="${prefix}">${items}</ul>`;
-      }).join('');
-
-      // Hint button
-      const hintBtn = q.hasHint ? `
-          <button class="btn-hint" onclick="showHintPopup()">
-            <span class="hint-title">⬡ GỢI Ý</span>
-            <span class="hint-sub">chỉ sử dụng khi đã rất bế tắc</span>
-          </button>` : '';
-
-      document.getElementById('quiz-wrapper').innerHTML = `
-        <div class="case-banner">
-          <span class="badge">🔍 Điều Tra Viên</span>
-          <span class="case-id">MÃ VỤ ÁN: #VN-FINAL</span>
-        </div>
-        <div class="card" id="mainCard">
-          <div class="step-indicator">${dots}</div>
-          <div class="case-label">${q.label}</div>
-          <h2>${q.title}</h2>
-          <div class="divider"><span class="divider-icon">⬡</span></div>
-          <p class="subtitle">${q.subtitle}</p>
-          ${groupsHtml}
-          <div class="btn-group">
-            <button class="btn-submit" onclick="checkAnswers()">XÁC NHẬN PHÂN TÍCH</button>
-            ${hintBtn}
-          </div>
-          <div class="case-footer">
-            <span class="footer-mono">BẢO MẬT — CẤP ĐỘ 4</span>
-            <span class="footer-mono">2025 · HỒ SƠ MẬT</span>
-          </div>
-        </div>`;
-
-      // Fade in animation
-      const card = document.getElementById('mainCard');
-      card.classList.add('fade-in');
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => card.classList.add('visible'));
-      });
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function checkAnswers() {
-      const q = QUESTIONS[currentQ];
-      let allCorrect = true;
-
-      q.groups.forEach((group, gi) => {
-        const prefix = `q${currentQ}g${gi}`;
-        let selected = [];
-        document.querySelectorAll(`#${prefix} input[type="checkbox"]:checked`).forEach(cb => {
-          selected.push(parseInt(cb.value));
-        });
-
-        if (selected.length !== group.correct.length) { allCorrect = false; return; }
-        selected.sort((a,b) => a-b);
-        const correct = [...group.correct].sort((a,b) => a-b);
-        if (JSON.stringify(selected) !== JSON.stringify(correct)) allCorrect = false;
-      });
-
-      if (allCorrect) {
-        // Câu cuối → show result
-        if (currentQ === QUESTIONS.length - 1) {
-          document.getElementById('quiz-wrapper').style.display = 'none';
-          document.getElementById('result-img').style.display = 'block';
-          document.getElementById('result-image').src = q.resultImage;
-        } else {
-          // Chuyển câu tiếp theo với fade
-          const card = document.getElementById('mainCard');
-          card.classList.add('fade-out');
-          setTimeout(() => {
-            currentQ++;
-            renderQuestion(currentQ);
-          }, 300);
-        }
-      } else {
-        document.getElementById('popup').style.display = 'flex';
-      }
-    }
-
-    function goBack() {
-      currentQ = 0;
-      document.getElementById('result-img').style.display = 'none';
-      document.getElementById('quiz-wrapper').style.display = 'block';
-      renderQuestion(0);
-    }
-
-    // Khởi tạo
-    renderQuestion(0);
-
     // ══════════════════════════════════════════════════
     // MUSIC PLAYER
     // ══════════════════════════════════════════════════
@@ -1279,26 +1665,68 @@
       // Cập nhật màu thanh gradient theo giá trị
       volSlider.style.setProperty('--vol', (val * 100) + '%');
     }
+
+    // ══════════════════════════════════════════════════
+    // BẢN ĐỒ HIỆN TRƯỜNG
+    // Điền link vào MAP_URL để bật, để "" để tắt (icon mờ + "Đang cập nhật")
+    // ══════════════════════════════════════════════════
+    const MAP_URL = ""; // ← THAY LINK BẢN ĐỒ VÀO ĐÂY
+
+    (function initMapBtn() {
+      const fabMap    = document.getElementById('fabMap');
+      const fabMapBtn = document.getElementById('fabMapBtn');
+      const fabMapLbl = document.getElementById('fabMapLabel');
+
+      if (!MAP_URL) {
+        // Không có link → làm mờ, đổi con trỏ, đổi label
+        fabMap.style.cursor  = 'default';
+        fabMapBtn.style.opacity = '0.35';
+        fabMapBtn.style.filter  = 'grayscale(60%)';
+        fabMapLbl.textContent   = 'ĐANG CẬP NHẬT';
+
+        // Xoá hover effect bằng cách ghi đè inline (CSS specificity)
+        fabMap.addEventListener('mouseenter', () => {
+          fabMapBtn.style.background    = '';
+          fabMapBtn.style.borderColor   = '';
+          fabMapBtn.style.boxShadow     = '';
+          fabMapBtn.style.transform     = '';
+        });
+      }
+    })();
+
+    function handleMapClick(e) {
+      if (!MAP_URL) {
+        e.preventDefault();
+        // Hiện tooltip "Đang cập nhật" nhỏ gọn ngay label
+        const lbl = document.getElementById('fabMapLabel');
+        lbl.textContent = 'ĐANG CẬP NHẬT...';
+        lbl.style.opacity = '1';
+        lbl.style.transform = 'translateX(0)';
+        setTimeout(() => {
+          lbl.style.opacity = '';
+          lbl.style.transform = '';
+        }, 1800);
+        return;
+      }
+      window.open(MAP_URL, '_blank', 'noopener');
+    }
   </script>
   <!-- ══════════════════════════════════════════════════
        FAB BUTTONS — GÓC DƯỚI PHẢI
        ══════════════════════════════════════════════════ -->
   <div class="fab-group">
 
-    <!-- [ICON BẢN ĐỒ] ← THAY LINK MAP Ở ĐÂY -->
-    <a class="fab-item"
-       href="https://designdaovn.github.io/acgiaacbao-3dscene/"
-       target="_blank"
-       rel="noopener"
-       id="fabMap"
-       title="Xem bản đồ hiện trường">
-      <span class="fab-label">BẢN ĐỒ HIỆN TRƯỜNG</span>
-      <div class="fab-btn">
+    <!-- [ICON BẢN ĐỒ]
+         ĐỂ BẬT: điền link vào MAP_URL bên dưới (trong thẻ script cuối file)
+         ĐỂ TẮT: để chuỗi rỗng "" → icon tự động mờ + hiện "Đang cập nhật" -->
+    <div class="fab-item" id="fabMap" title="Xem bản đồ hiện trường" onclick="handleMapClick(event)">
+      <span class="fab-label" id="fabMapLabel">BẢN ĐỒ HIỆN TRƯỜNG</span>
+      <div class="fab-btn" id="fabMapBtn">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path class="icon-default" d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/>
         </svg>
       </div>
-    </a>
+    </div>
 
     <!-- [ICON ZALO] ← THAY SỐ ĐIỆN THOẠI Ở ĐÂY
          Định dạng: https://zalo.me/SỐ_ĐIỆN_THOẠI (bỏ số 0 đầu, thêm 84)
@@ -1319,6 +1747,428 @@
 
   </div>
   <!-- ══════════════════════════════════════════════════ -->
+
+  <!-- ══════════════════════════════════════════════════
+       FAB TRÁI — HỒ SƠ TÀI LIỆU
+       ══════════════════════════════════════════════════ -->
+  <div class="fab-group-left">
+
+    <!-- Panel danh sách tài liệu -->
+    <div class="doc-panel" id="docPanel">
+
+      <!-- Banner khoá -->
+      <div class="doc-locked-banner" id="docLockedBanner">
+        <span>🔒</span>
+        <span id="docLockedMsg">Hệ thống đang khoá</span>
+      </div>
+
+      <div class="doc-panel-header">
+        <div class="doc-panel-title">⬡ Hồ Sơ Tài Liệu</div>
+        <input
+          type="text"
+          class="doc-search"
+          id="docSearch"
+          placeholder="Tìm kiếm tài liệu..."
+          oninput="filterDocs(this.value)"
+          autocomplete="off"
+        >
+      </div>
+
+      <div class="doc-scroll" id="docScroll">
+        <!-- Nhóm Cấp 1 -->
+        <div class="doc-group" id="group-cap1">
+          <div class="doc-group-label cap1"><span class="lock-icon">🔵</span> BẢO VỆ CẤP 1 · 1 PHÚT/TÀI LIỆU</div>
+          <ul class="doc-list" id="list-cap1"></ul>
+        </div>
+        <!-- Nhóm Cấp 2 -->
+        <div class="doc-group" id="group-cap2">
+          <div class="doc-group-label cap2"><span class="lock-icon">🟠</span> BẢO VỆ CẤP 2 · 10 PHÚT/TÀI LIỆU</div>
+          <ul class="doc-list" id="list-cap2"></ul>
+        </div>
+        <!-- Nhóm Cấp 3 -->
+        <div class="doc-group" id="group-cap3">
+          <div class="doc-group-label cap3"><span class="lock-icon">🔴</span> BẢO VỆ CẤP 3 · 30 PHÚT/TÀI LIỆU</div>
+          <ul class="doc-list" id="list-cap3"></ul>
+        </div>
+
+        <div class="doc-empty" id="docEmpty">Không tìm thấy tài liệu</div>
+      </div>
+    </div>
+
+    <!-- Countdown -->
+    <div class="doc-countdown" id="docCountdown"></div>
+
+    <!-- Nút cảnh sát -->
+    <div class="fab-left-btn" id="fabDocs" onclick="toggleDocPanel()" title="Yêu cầu tài liệu">
+      <span class="fab-left-label" id="fabDocsLabel">YÊU CẦU TÀI LIỆU</span>
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C9.24 2 7 4.24 7 7c0 1.64.79 3.09 2 4.01V13H7l-2 2v2h2v3h2v-3h6v3h2v-3h2v-2l-2-2h-2v-1.99C16.21 10.09 17 8.64 17 7c0-2.76-2.24-5-5-5zm0 2c1.65 0 3 1.35 3 3S13.65 10 12 10 9 8.65 9 7s1.35-3 3-3z"/>
+      </svg>
+    </div>
+
+  </div>
+
+  <script>
+    // ══════════════════════════════════════════════════════════════════
+    // DANH SÁCH TÀI LIỆU
+    // Để tuỳ chỉnh: sửa mảng DOCUMENTS bên dưới
+    // Mỗi mục gồm: { name: "Tên tài liệu", cap: 1|2|3, url: "https://..." }
+    // Hoặc gửi file Excel → Claude sẽ tự trích xuất vào đây
+    // ══════════════════════════════════════════════════════════════════
+    const DOCUMENTS = [
+      // ── CẤP 1 (khoá 1 phút) ─────────────────────────────────────
+      { cap: 1, name: "Hồ sơ cá nhân Phạm Minh Châu",               url: "#" },
+      { cap: 1, name: "Hồ sơ cá nhân Trần Minh Khoa",               url: "#" },
+      { cap: 1, name: "Hồ sơ cá nhân Lê Thu Thảo",                  url: "#" },
+      { cap: 1, name: "Hồ sơ cá nhân Võ Tấn Bình",                  url: "#" },
+      { cap: 1, name: "Hồ sơ cá nhân Phạm Gia Hưng",                url: "#" },
+      { cap: 1, name: "Hồ sơ cá nhân Phạm Gia Phú",                 url: "#" },
+      { cap: 1, name: "Hồ sơ cá nhân Võ Ngọc Lan",                  url: "#" },
+      { cap: 1, name: "Hồ sơ cá nhân Đặng Nhật Đông",               url: "#" },
+      { cap: 1, name: "Hồ sơ cá nhân Vũ Hà Nam",                    url: "#" },
+      { cap: 1, name: "Hồ sơ cá nhân Nguyễn Văn Thọ",               url: "#" },
+      { cap: 1, name: "Hồ sơ cá nhân Trần Thị Mai Anh",             url: "#" },
+      { cap: 1, name: "Hồ sơ cá nhân Trần Văn Tính",                url: "#" },
+      { cap: 1, name: "Hồ sơ cá nhân Lê Nhật Hoàng",                url: "#" },
+      { cap: 1, name: "Hồ sơ cá nhân Trần Thị Huế",                 url: "#" },
+      { cap: 1, name: "Hồ sơ cá nhân Lê Hoàng Minh Hằng",          url: "#" },
+      { cap: 1, name: "Thông tin các tuyến xe bus - camera xe bus",  url: "#" },
+      { cap: 1, name: "Danh sách học sinh",                           url: "#" },
+      { cap: 1, name: "Ảnh hiện trường bổ sung - ngôi nhà gỗ (cột điện, hộp điện)", url: "#" },
+
+      // ── CẤP 2 (khoá 10 phút) ────────────────────────────────────
+      { cap: 2, name: "Danh sách người trả lời Phỏng vấn trên báo", url: "#" },
+      { cap: 2, name: "Hợp đồng bảo hiểm của Phạm Minh Châu",       url: "#" },
+      { cap: 2, name: "Hồ sơ cá nhân - Đại úy Trịnh Văn Sơn",      url: "#" },
+      { cap: 2, name: "Hồ sơ cá nhân - Thiếu úy Ngô Thị Minh Nguyệt", url: "#" },
+      { cap: 2, name: "Hồ sơ cá nhân - Thiếu úy Nguyễn Vĩnh Huy",  url: "#" },
+      { cap: 2, name: "Hồ sơ cá nhân - Trung úy Trần Thế Nam",      url: "#" },
+      { cap: 2, name: "Hồ sơ cá nhân - Đại úy Vũ Thu Thảo",        url: "#" },
+      { cap: 2, name: "Hồ sơ cá nhân - Trung úy Tạ Quang Nam",      url: "#" },
+      { cap: 2, name: "Hồ sơ cá nhân - Trung úy Trần Thế Nam",      url: "#" },
+
+      // ── CẤP 3 (khoá 30 phút) ────────────────────────────────────
+      { cap: 3, name: "Hồ sơ cá nhân - Thiếu Tá Lý Hoàng Trung",   url: "#" },
+      { cap: 3, name: "Hồ sơ cá nhân - Đại Tá Lê Vũ Nam",          url: "#" },
+    ];
+
+    // Thời gian khoá theo cấp (giây)
+    const LOCK_DURATION = { 1: 60, 2: 600, 3: 1800 };
+    const CAP_CLASS     = { 1: 'cap1', 2: 'cap2', 3: 'cap3' };
+
+    // Trạng thái khoá: { unlocksAt: timestamp(ms) | null, cap: 1|2|3 }
+    let lockState = { unlocksAt: null, cap: null };
+    let countdownInterval = null;
+
+    // ── Build danh sách HTML ──────────────────────────────────────
+    function buildDocList() {
+      [1, 2, 3].forEach(cap => {
+        const ul = document.getElementById('list-cap' + cap);
+        ul.innerHTML = '';
+        DOCUMENTS.filter(d => d.cap === cap).forEach(doc => {
+          const li = document.createElement('li');
+          li.dataset.name = doc.name.toLowerCase();
+          li.dataset.cap  = cap;
+          li.innerHTML = `<a href="${doc.url}" target="_blank" rel="noopener" data-cap="${cap}" data-name_display="${doc.name}">
+            <span class="doc-arrow">↗</span>${doc.name}
+          </a>`;
+          li.querySelector('a').addEventListener('click', onDocClick);
+          ul.appendChild(li);
+        });
+      });
+      applyLockState();
+    }
+
+    // ── BASE URL kho ảnh tài liệu ────────────────────────────────
+    const DOC_IMAGE_BASE = "https://designdaovn.github.io/Vongxoaytoiac_anhtailieubosung/";
+
+    // ── Xử lý click tài liệu ─────────────────────────────────────
+    function onDocClick(e) {
+      e.preventDefault();
+      const cap = parseInt(e.currentTarget.dataset.cap);
+      if (isLocked()) return;
+
+      const docName = e.currentTarget.dataset.name_display || e.currentTarget.textContent.replace('↗', '').trim();
+      const imgUrl = DOC_IMAGE_BASE + encodeURIComponent(docName) + '.jpg';
+
+      // Mở tab mới ngay trong luồng click — không bị popup blocker
+      // Tab sẽ hiển thị ảnh nếu có, hoặc tự hiện thông báo lỗi nếu không có
+      const html = `<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>${docName}</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#111; display:flex; align-items:center; justify-content:center; min-height:100vh; font-family:Georgia,serif; }
+    img { max-width:100%; max-height:100vh; object-fit:contain; display:block; }
+    .error { text-align:center; color:#f5f0e8; padding:40px; }
+    .error h2 { color:#ebd11e; font-size:22px; margin-bottom:16px; letter-spacing:2px; }
+    .error p { color:rgba(245,240,232,0.6); font-style:italic; font-size:16px; line-height:1.7; }
+    .error .icon { font-size:48px; margin-bottom:20px; }
+  </style>
+</head>
+<body>
+  <img src="${imgUrl}" alt="${docName}"
+    onerror="this.style.display='none'; document.getElementById('err').style.display='block'">
+  <div id="err" style="display:none" class="error">
+    <div class="icon">⚠️</div>
+    <h2>KẾT NỐI THẤT BẠI</h2>
+    <p>Hiện tại lượng truy cập vào cơ sở dữ liệu<br>của công an tỉnh Triều Sơn quá lớn,<br>vui lòng thử lại sau hoặc tìm tài liệu khác.</p>
+  </div>
+</body>
+</html>`;
+
+      const blob = new Blob([html], { type: 'text/html' });
+      const blobUrl = URL.createObjectURL(blob);
+      window.open(blobUrl, '_blank');
+
+      // Xử lý phía game (inject vào câu hỏi, khoá, mở Lê Khả Hân...)
+      const normName = normalizeLabel(docName);
+      injectDocToQuiz(docName, Q2_CORRECT.has(normName), Q4_CORRECT.has(normName));
+
+      openedDocs.add(normName);
+      if (normName === 'hồ sơ cá nhân lê thu thảo') unlockLeKhaHan();
+
+      const secs = LOCK_DURATION[cap];
+      lockState = { unlocksAt: Date.now() + secs * 1000, cap };
+      applyLockState();
+      startCountdown();
+      document.getElementById('docPanel').classList.remove('is-open');
+    }
+
+    // ── Mở khoá "Hồ sơ cá nhân Lê Khả Hân" sau khi mở Lê Thu Thảo ──
+    function unlockLeKhaHan() {
+      const LE_KHA_HAN = "Hồ sơ cá nhân Lê Khả Hân";
+      // Kiểm tra đã thêm chưa
+      if (document.querySelector(`[data-name_display="${LE_KHA_HAN}"]`)) return;
+
+      const ul = document.getElementById('list-cap1');
+      const li = document.createElement('li');
+      li.dataset.name = LE_KHA_HAN.toLowerCase();
+      li.dataset.cap  = 1;
+      li.innerHTML = `<a href="#" target="_blank" rel="noopener" data-cap="1" data-name_display="${LE_KHA_HAN}" style="color:var(--gold);">
+        <span class="doc-arrow">↗</span>${LE_KHA_HAN} <span style="font-size:9px;opacity:0.7;">✦ MỚI MỞ KHOÁ</span>
+      </a>`;
+      li.querySelector('a').addEventListener('click', onDocClick);
+      ul.appendChild(li);
+      applyLockState();
+
+      // Thông báo nhỏ
+      const el = document.getElementById('docCountdown');
+      const prev = el.textContent;
+      el.textContent = '✦ Lê Khả Hân đã được mở khoá!';
+      el.style.color = 'var(--gold)';
+      setTimeout(() => {
+        el.textContent = prev;
+        el.style.color = '';
+      }, 3000);
+    }
+
+    // ── Kiểm tra đang khoá ───────────────────────────────────────
+    function isLocked() {
+      return lockState.unlocksAt && Date.now() < lockState.unlocksAt;
+    }
+
+    // ── Áp dụng trạng thái khoá lên UI ──────────────────────────
+    function applyLockState() {
+      const locked = isLocked();
+      // Khoá / mở khoá tất cả link
+      document.querySelectorAll('.doc-list li a').forEach(a => {
+        a.classList.toggle('locked', locked);
+        if (locked) a.removeAttribute('href-active');
+      });
+      // Banner
+      const banner = document.getElementById('docLockedBanner');
+      if (locked) {
+        const remaining = Math.ceil((lockState.unlocksAt - Date.now()) / 1000);
+        const mm = String(Math.floor(remaining / 60)).padStart(2, '0');
+        const ss = String(remaining % 60).padStart(2, '0');
+        document.getElementById('docLockedMsg').textContent =
+          `Hệ thống khoá ${mm}:${ss} — Cấp ${lockState.cap}`;
+        banner.classList.add('visible');
+      } else {
+        banner.classList.remove('visible');
+      }
+    }
+
+    // ── Đếm ngược dưới icon ──────────────────────────────────────
+    function startCountdown() {
+      if (countdownInterval) clearInterval(countdownInterval);
+      const el = document.getElementById('docCountdown');
+      el.className = 'doc-countdown ' + CAP_CLASS[lockState.cap];
+
+      countdownInterval = setInterval(() => {
+        if (!isLocked()) {
+          clearInterval(countdownInterval);
+          el.textContent = '';
+          el.className = 'doc-countdown';
+          applyLockState();
+          return;
+        }
+        const remaining = Math.ceil((lockState.unlocksAt - Date.now()) / 1000);
+        const mm = String(Math.floor(remaining / 60)).padStart(2, '0');
+        const ss = String(remaining % 60).padStart(2, '0');
+        el.textContent = `🔒 ${mm}:${ss}`;
+        applyLockState();
+      }, 1000);
+    }
+
+    // ── Tìm kiếm ─────────────────────────────────────────────────
+    function filterDocs(query) {
+      const q = query.trim().toLowerCase();
+      let totalVisible = 0;
+
+      [1, 2, 3].forEach(cap => {
+        const items = document.querySelectorAll('#list-cap' + cap + ' li');
+        let groupVisible = 0;
+        items.forEach(li => {
+          const match = !q || li.dataset.name.includes(q);
+          li.style.display = match ? '' : 'none';
+          if (match) { groupVisible++; totalVisible++; }
+        });
+        document.getElementById('group-cap' + cap).style.display = groupVisible === 0 && q ? 'none' : '';
+      });
+
+      document.getElementById('docEmpty').style.display = totalVisible === 0 ? 'block' : 'none';
+    }
+
+    // ── Toggle panel ─────────────────────────────────────────────
+    function toggleDocPanel() {
+      const panel = document.getElementById('docPanel');
+      const isOpen = panel.classList.toggle('is-open');
+      if (isOpen) {
+        const search = document.getElementById('docSearch');
+        search.value = '';
+        filterDocs('');
+        applyLockState();
+        setTimeout(() => search.focus(), 50);
+      }
+    }
+
+    // ── Đóng khi click ra ngoài ───────────────────────────────────
+    document.addEventListener('click', (e) => {
+      const panel = document.getElementById('docPanel');
+      const btn   = document.getElementById('fabDocs');
+      const countdown = document.getElementById('docCountdown');
+      if (panel.classList.contains('is-open') &&
+          !panel.contains(e.target) &&
+          !btn.contains(e.target) &&
+          !countdown.contains(e.target)) {
+        panel.classList.remove('is-open');
+      }
+    });
+
+    // ── Khởi động ────────────────────────────────────────────────
+    buildDocList();
+  </script>
+  <!-- ====== POPUP QUÁ TẢI ====== -->
+  <div class="popup" id="overload-popup">
+    <div class="popup-content" style="border-top: 4px solid #e67e22;">
+      <span class="popup-close-x" onclick="closePopup('overload-popup')">×</span>
+      <div class="popup-body" style="padding-top:32px;">
+        <div style="font-size:36px; margin-bottom:14px;">⚠️</div>
+        <div class="popup-title" style="color:#e67e22; font-size:17px; line-height:1.5; letter-spacing:1px;">
+          KẾT NỐI THẤT BẠI
+        </div>
+        <p class="popup-msg" style="margin-top:12px;">
+          Hiện tại lượng truy cập vào cơ sở dữ liệu của công an tỉnh Triều Sơn quá lớn,
+          vui lòng thử lại sau hoặc tìm tài liệu khác.
+        </p>
+        <button class="popup-close-btn" onclick="closePopup('overload-popup')" style="border-color:rgba(230,126,34,0.5); color:#e67e22;">ĐÓNG</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== POPUP HƯỚNG DẪN ====== -->
+  <div class="tutorial-popup" id="tutorial-popup">
+    <div class="tutorial-content">
+
+      <div class="tutorial-header">
+        <span class="tutorial-header-icon">💡</span>
+        <div class="tutorial-title">Có thể bạn chưa biết?</div>
+        <span class="popup-close-x" style="position:absolute;top:10px;right:14px;" onclick="closeTutorial()">×</span>
+      </div>
+
+      <div class="tutorial-body">
+
+        <!-- Cảnh sát -->
+        <div class="tutorial-row">
+          <div class="tutorial-icon-wrap">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2C9.24 2 7 4.24 7 7c0 1.64.79 3.09 2 4.01V13H7l-2 2v2h2v3h2v-3h6v3h2v-3h2v-2l-2-2h-2v-1.99C16.21 10.09 17 8.64 17 7c0-2.76-2.24-5-5-5zm0 2c1.65 0 3 1.35 3 3S13.65 10 12 10 9 8.65 9 7s1.35-3 3-3z"/>
+            </svg>
+          </div>
+          <div class="tutorial-desc">
+            <div class="tutorial-desc-title">Yêu cầu tài liệu</div>
+            <div class="tutorial-desc-text">Yêu cầu thêm hồ sơ, tài liệu từ cơ sở dữ liệu công an tỉnh Triều Sơn</div>
+          </div>
+        </div>
+
+        <!-- Bản đồ -->
+        <div class="tutorial-row">
+          <div class="tutorial-icon-wrap">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/>
+            </svg>
+          </div>
+          <div class="tutorial-desc">
+            <div class="tutorial-desc-title">Bản đồ hiện trường</div>
+            <div class="tutorial-desc-text">Truy cập tính năng hiện trường ảo</div>
+          </div>
+        </div>
+
+        <!-- Play nhạc -->
+        <div class="tutorial-row">
+          <div class="tutorial-icon-wrap play-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          </div>
+          <div class="tutorial-desc">
+            <div class="tutorial-desc-title">Nhạc nền</div>
+            <div class="tutorial-desc-text">Bật / tắt, tăng, giảm nhạc nền </div>
+          </div>
+        </div>
+
+        <!-- Zalo -->
+        <div class="tutorial-row">
+          <div class="tutorial-icon-wrap zalo-icon">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+              <path d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm-6.5 12h9.75l-9.9 11.5H27v2.5H16.5l9.9-11.5H17.5V16zm13 16.5c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+            </svg>
+          </div>
+          <div class="tutorial-desc">
+            <div class="tutorial-desc-title">Liên hệ Zalo</div>
+            <div class="tutorial-desc-text">Liên hệ trực tiếp số Zalo của Designdao</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Ghi chú cuối -->
+      <div class="tutorial-note">
+        <p>Hồ sơ, giấy tờ, tài liệu mà các điều tra viên yêu cầu bổ sung, sẽ có trong danh sách đáp án của câu hỏi.</p>
+      </div>
+
+      <div class="tutorial-close-wrap">
+        <button class="tutorial-close-btn" onclick="closeTutorial()">ĐÃ HIỂU — BẮT ĐẦU ĐIỀU TRA</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Hiện popup hướng dẫn khi vào trang lần đầu
+    window.addEventListener('load', function() {
+      document.getElementById('tutorial-popup').style.display = 'flex';
+    });
+
+    function closeTutorial() {
+      document.getElementById('tutorial-popup').style.display = 'none';
+    }
+  </script>
 
 </body>
 </html>
