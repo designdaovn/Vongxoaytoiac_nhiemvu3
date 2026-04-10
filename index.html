@@ -1594,23 +1594,22 @@
     }
 
     // ══════════════════════════════════════════════════
-    // GỢI Ý — 2 cấp độ
+    // GỢI Ý — mỗi câu hỏi 1 ảnh gợi ý riêng
     // ══════════════════════════════════════════════════
-    // [THAY LINK ẢNH GỢI Ý Ở ĐÂY]
-    const HINT_1_IMAGE_URL = "NV3_GY1.png";
-    const HINT_2_IMAGE_URL = "NV3_GY2.png";
-
-    let hintUsedCount = 0; // đếm số lần bấm gợi ý
+    // [THAY LINK ẢNH GỢI Ý CHO TỪNG CÂU HỎI Ở ĐÂY]
+    const HINT_IMAGES = {
+      1: "NV3_GY1.png",   // ← ảnh gợi ý cho câu hỏi 1
+      2: "NV3_GY2.png",   // ← ảnh gợi ý cho câu hỏi 2
+      3: "NV3_GY3.png",   // ← ảnh gợi ý cho câu hỏi 3
+    };
 
     function showHintPopup() {
-      hintUsedCount++;
-      const isHint1 = hintUsedCount === 1;
+      const imgUrl = HINT_IMAGES[currentQuestion] || HINT_IMAGES[1];
 
-      document.getElementById('hint-popup-img').src = isHint1 ? HINT_1_IMAGE_URL : HINT_2_IMAGE_URL;
-      document.getElementById('hint-popup-title').textContent = isHint1 ? 'GỢI Ý 1' : 'GỢI Ý 2';
-      document.getElementById('hint-popup-msg').innerHTML = isHint1
-        ? 'Đây là manh mối đầu tiên dành cho bạn.<br>Hãy suy nghĩ thật kỹ trước khi đưa ra quyết định.'
-        : 'Đây là manh mối cuối cùng dành cho bạn.<br>Tin vào bản năng điều tra của mình!';
+      document.getElementById('hint-popup-img').src = imgUrl;
+      document.getElementById('hint-popup-title').textContent = 'GỢI Ý — CÂU ' + currentQuestion;
+      document.getElementById('hint-popup-msg').innerHTML =
+        'Đây là manh mối dành cho bạn.<br>Hãy suy nghĩ thật kỹ trước khi đưa ra quyết định.';
 
       document.getElementById('hint-popup').style.display = 'flex';
     }
