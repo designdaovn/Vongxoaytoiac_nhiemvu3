@@ -1951,8 +1951,8 @@
       const li = document.createElement('li');
       li.dataset.name = LE_KHA_HAN.toLowerCase();
       li.dataset.cap  = 1;
-      li.innerHTML = `<a href="#" target="_blank" rel="noopener" data-cap="1" data-name_display="${LE_KHA_HAN}" style="color:var(--gold);">
-        <span class="doc-arrow">↗</span>${LE_KHA_HAN} <span style="font-size:9px;opacity:0.7;">✦ MỚI MỞ KHOÁ</span>
+      li.innerHTML = `<a href="#" target="_blank" rel="noopener" data-cap="1" data-name_display="${LE_KHA_HAN}">
+        <span class="doc-arrow">↗</span>${LE_KHA_HAN}
       </a>`;
       li.querySelector('a').addEventListener('click', onDocClick);
       ul.appendChild(li);
