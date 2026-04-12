@@ -1260,18 +1260,29 @@
           <p style="font-family:'Lora',Georgia,serif; font-size:17px; color:var(--paper); margin-bottom:18px; line-height:1.5;">
             Ai là hung thủ của Vụ án Phạm Minh Châu?
           </p>
-          <ul class="answers" id="q1-answers">
-            <li><input type="radio" name="q1" value="wrong" id="q1a"><label for="q1a"><div class="check-box"></div><span class="evidence-num">A</span>Trần Minh Khoa</label></li>
-            <li><input type="radio" name="q1" value="wrong" id="q1b"><label for="q1b"><div class="check-box"></div><span class="evidence-num">B</span>Lê Thu Thảo</label></li>
-            <li><input type="radio" name="q1" value="wrong" id="q1c"><label for="q1c"><div class="check-box"></div><span class="evidence-num">C</span>Phạm Gia Phú</label></li>
-            <li><input type="radio" name="q1" value="wrong" id="q1d"><label for="q1d"><div class="check-box"></div><span class="evidence-num">D</span>Phạm Gia Hưng</label></li>
-            <li><input type="radio" name="q1" value="wrong" id="q1e"><label for="q1e"><div class="check-box"></div><span class="evidence-num">E</span>Đặng Nhật Đông</label></li>
-            <li><input type="radio" name="q1" value="wrong" id="q1f"><label for="q1f"><div class="check-box"></div><span class="evidence-num">F</span>Vũ Hà Nam</label></li>
-            <li><input type="radio" name="q1" value="wrong" id="q1g"><label for="q1g"><div class="check-box"></div><span class="evidence-num">G</span>Nguyễn Văn Thọ</label></li>
-            <li><input type="radio" name="q1" value="wrong" id="q1h"><label for="q1h"><div class="check-box"></div><span class="evidence-num">H</span>Võ Tấn Bình</label></li>
-            <li><input type="radio" name="q1" value="correct" id="q1i"><label for="q1i"><div class="check-box"></div><span class="evidence-num">D</span>Lê Khả Hân</label></li>       
-            
-          </ul>
+          <div style="position:relative;">
+            <input
+              type="text"
+              id="q1-text-input"
+              placeholder="Nhập tên hung thủ..."
+              autocomplete="off"
+              style="
+                width:100%;
+                padding:14px 16px;
+                background:rgba(255,255,255,0.03);
+                border:1px solid rgba(235,209,30,0.25);
+                border-radius:4px;
+                color:var(--paper);
+                font-family:'Lora',Georgia,serif;
+                font-size:16.5px;
+                outline:none;
+                transition:border-color 0.25s ease, box-shadow 0.25s ease;
+                box-sizing:border-box;
+              "
+              oninput="this.style.borderColor='rgba(235,209,30,0.5)'"
+            >
+          </div>
+          <p id="q1-input-hint" style="font-family:'Courier Prime','Courier New',monospace; font-size:10px; color:rgba(235,209,30,0.4); letter-spacing:1px; margin-top:8px;">⬡ Nhập tên đầy đủ của hung thủ</p>
         </div>
 
         <!-- CÂU HỎI 2 — ẩn ban đầu -->
@@ -1280,17 +1291,29 @@
           <p style="font-family:'Lora',Georgia,serif; font-size:17px; color:var(--paper); margin-bottom:18px; line-height:1.5;">
             Ai là hung thủ của Vụ án cháy căn nhà gỗ?
           </p>
-          <ul class="answers" id="q2-answers">
-            <li><input type="radio" name="q2" value="wrong" id="q2a"><label for="q2a"><div class="check-box"></div><span class="evidence-num">A</span>Trần Minh Khoa</label></li>
-            <li><input type="radio" name="q2" value="wrong" id="q2b"><label for="q2b"><div class="check-box"></div><span class="evidence-num">B</span>Lê Thu Thảo</label></li>
-            <li><input type="radio" name="q2" value="wrong" id="q2c"><label for="q2c"><div class="check-box"></div><span class="evidence-num">C</span>Phạm Gia Phú</label></li>
-            <li><input type="radio" name="q2" value="wrong" id="q2d"><label for="q2d"><div class="check-box"></div><span class="evidence-num">D</span>Phạm Gia Hưng</label></li>
-            <li><input type="radio" name="q2" value="wrong" id="q2e"><label for="q2e"><div class="check-box"></div><span class="evidence-num">E</span>Đặng Nhật Đông</label></li>
-            <li><input type="radio" name="q2" value="wrong" id="q2f"><label for="q2f"><div class="check-box"></div><span class="evidence-num">F</span>Vũ Hà Nam</label></li>
-            <li><input type="radio" name="q2" value="wrong" id="q2g"><label for="q2g"><div class="check-box"></div><span class="evidence-num">G</span>Nguyễn Văn Thọ</label></li>
-            <li><input type="radio" name="q2" value="wrong" id="q2h"><label for="q2h"><div class="check-box"></div><span class="evidence-num">H</span>Võ Tấn Bình</label></li>
-            <li><input type="radio" name="q2" value="correct" id="q2i"><label for="q2i"><div class="check-box"></div><span class="evidence-num">D</span>Lê Khả Hân</label></li>       
-          </ul>
+          <div style="position:relative;">
+            <input
+              type="text"
+              id="q2-text-input"
+              placeholder="Nhập tên hung thủ..."
+              autocomplete="off"
+              style="
+                width:100%;
+                padding:14px 16px;
+                background:rgba(255,255,255,0.03);
+                border:1px solid rgba(235,209,30,0.25);
+                border-radius:4px;
+                color:var(--paper);
+                font-family:'Lora',Georgia,serif;
+                font-size:16.5px;
+                outline:none;
+                transition:border-color 0.25s ease, box-shadow 0.25s ease;
+                box-sizing:border-box;
+              "
+              oninput="this.style.borderColor='rgba(235,209,30,0.5)'"
+            >
+          </div>
+          <p id="q2-input-hint" style="font-family:'Courier Prime','Courier New',monospace; font-size:10px; color:rgba(235,209,30,0.4); letter-spacing:1px; margin-top:8px;">⬡ Nhập tên đầy đủ của hung thủ</p>
         </div>
 
         <!-- CÂU HỎI 3 — ẩn ban đầu -->
@@ -1524,11 +1547,34 @@
       return { correct, wrong, total: checked.length };
     }
 
+    // Chuẩn hoá chuỗi: bỏ dấu, thường hoá, xoá khoảng trắng thừa
+    function removeAccents(str) {
+      return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g,'d').replace(/Đ/g,'D');
+    }
+    function normalizeAnswer(str) {
+      return removeAccents(str).toLowerCase().trim().replace(/\s+/g, ' ');
+    }
+
+    // Các dạng chấp nhận của "Lê Khả Hân"
+    const Q1_ACCEPTED = new Set([
+      normalizeAnswer('Lê Khả Hân'),
+      normalizeAnswer('le kha han'),
+      normalizeAnswer('LÊ KHẢ HÂN'),
+      normalizeAnswer('Lê khả hân'),
+      normalizeAnswer('lê khả hân'),
+      normalizeAnswer('LÊ Khả Hân'),
+    ]);
+
+    function checkQ1Text(raw) {
+      return Q1_ACCEPTED.has(normalizeAnswer(raw));
+    }
+
     function checkAnswers() {
       if (currentQuestion === 1) {
-        const selected = document.querySelector('input[name="q1"]:checked');
-        if (!selected) { alert("⚠ Bạn chưa chọn đáp án!"); return; }
-        if (selected.value === 'correct') {
+        const inputEl = document.getElementById('q1-text-input');
+        const val = inputEl ? inputEl.value.trim() : '';
+        if (!val) { alert("⚠ Bạn chưa nhập đáp án!"); return; }
+        if (checkQ1Text(val)) {
           currentQuestion = 2;
           document.getElementById('q1-block').style.display = 'none';
           document.getElementById('q2-block').style.display = 'block';
@@ -1537,9 +1583,10 @@
           showWrongPopup();
         }
       } else if (currentQuestion === 2) {
-        const selected = document.querySelector('input[name="q2"]:checked');
-        if (!selected) { alert("⚠ Bạn chưa chọn đáp án!"); return; }
-        if (selected.value === 'correct') {
+        const inputEl2 = document.getElementById('q2-text-input');
+        const val2 = inputEl2 ? inputEl2.value.trim() : '';
+        if (!val2) { alert("⚠ Bạn chưa nhập đáp án!"); return; }
+        if (checkQ1Text(val2)) {
           currentQuestion = 3;
           document.getElementById('q2-block').style.display = 'none';
           document.getElementById('q3-block').style.display = 'block';
@@ -1584,7 +1631,11 @@
 
     function goBack() {
       currentQuestion = 1;
-      document.querySelectorAll('input[name="q1"], input[name="q2"], input[name="q3"]').forEach(r => r.checked = false);
+      const q1input = document.getElementById('q1-text-input');
+      if (q1input) { q1input.value = ''; q1input.style.borderColor = 'rgba(235,209,30,0.25)'; }
+      const q2input = document.getElementById('q2-text-input');
+      if (q2input) { q2input.value = ''; q2input.style.borderColor = 'rgba(235,209,30,0.25)'; }
+      document.querySelectorAll('input[name="q3"]').forEach(r => r.checked = false);
       document.getElementById('q1-block').style.display = 'block';
       document.getElementById('q2-block').style.display = 'none';
       document.getElementById('q3-block').style.display = 'none';
